@@ -13,11 +13,6 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Install Docker
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y docker.io
-
     - name: Create .tyk.json
       run: |
         echo '{' > .tyk.json
@@ -34,8 +29,15 @@ jobs:
         echo '}' >> .tyk.json
 
     - name: Sync with Tyk
-      run: |
-        docker run -v ${{ github.workspace }}:/app/data tykio/tyk-sync:v1.5.0 sync --path /app/data --dashboard ${TYK_DASHBOARD_URL} --secret ${TYK_DASHBOARD_SECRET}
+      uses: addnab/docker-run-action@v3
+      with:
+        image: tykio/tyk-sync:v1.4.3
+        options: -v ${{ github.workspace }}:/app/data
+        run: |
+          cd /opt/tyk-sync
+          tyk-sync sync --path /app/data --dashboard ${TYK_DASHBOARD_URL} --secret ${TYK_DASHBOARD_SECRET}
+      #run: |
+      #  docker run -v ${{ github.workspace }}:/app/data tykio/tyk-sync:v1.5.0 sync --path /app/data --dashboard ${TYK_DASHBOARD_URL} --secret ${TYK_DASHBOARD_SECRET}
       env:
         TYK_DASHBOARD_URL: ${{ secrets.TYK_DASHBOARD_URL }}
         TYK_DASHBOARD_SECRET: ${{ secrets.TYK_DASHBOARD_SECRET }}
