@@ -1,0 +1,3 @@
+# Tyk Sync action
+
+Hello!

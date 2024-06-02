@@ -1,0 +1,6 @@
+# action.yml
+name: 'Tyk Sync'
+description: 'tyk-sync synchronise API configurations from Git to Tyk'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
