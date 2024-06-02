@@ -1,0 +1,41 @@
+{
+  "api_definition": {
+    "id": "7869e7cdf15947947cf22466d99bce81",
+    "name": "test2",
+    "slug": "tempx"
+  },
+  "oas": {
+    "components": {},
+    "info": {
+      "title": "test2",
+      "version": "1.0.0"
+    },
+    "openapi": "3.0.3",
+    "paths": {},
+    "x-tyk-api-gateway": {
+      "info": {
+        "dbId": "6659ca3e58735000013dc856",
+        "id": "7869e7cdf15947947cf22466d99bce81",
+        "name": "test2",
+        "orgId": "664f5023d4df31000105fc8d",
+        "state": {
+          "active": true
+        }
+      },
+      "server": {
+        "listenPath": {
+          "strip": true,
+          "value": "/test2/"
+        }
+      },
+      "upstream": {
+        "url": "http://httpbin.org/"
+      }
+    }
+  },
+  "hook_references": [],
+  "is_site": false,
+  "sort_by": 0,
+  "user_group_owners": [],
+  "user_owners": []
+}

@@ -1,0 +1,41 @@
+name: Tyk Backup
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Runs every day at midnight
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Install Docker
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y docker.io
+
+    - name: Create Backup Directory
+      run: |
+        BACKUP_DIR="backup/$(date +%Y-%m-%d)"
+        mkdir -p $BACKUP_DIR
+        export BACKUP_DIR
+
+    - name: Dump API Configurations
+      run: |
+        docker run -v ${{ github.workspace }}:/app/data tykio/tyk-sync:v1.5.0 dump --output /app/data/$BACKUP_DIR --dashboard ${TYK_DASHBOARD_URL} --secret ${TYK_DASHBOARD_SECRET}
+      env:
+        TYK_DASHBOARD_URL: ${{ secrets.TYK_DASHBOARD_URL }}
+        TYK_DASHBOARD_SECRET: ${{ secrets.TYK_DASHBOARD_SECRET }}
+
+    - name: Commit and Push Backup
+      run: |
+        git config --global user.name 'github-actions'
+        git config --global user.email 'github-actions@github.com'
+        git add backup/
+        git commit -m "Backup on $(date +%Y-%m-%d)"
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
