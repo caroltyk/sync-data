@@ -19,17 +19,11 @@ jobs:
         export BACKUP_DIR
 
     - name: Dump API Configurations
-      uses: addnab/docker-run-action@v3
-      with:
-        registry: tykio
-        image: tyk-sync:v1.4.3
-        options: -v ${{ github.workspace }}:/app/data
-        run: |
-          tyk-sync dump -t /app/data/$BACKUP_DIR --dashboard ${TYK_DASHBOARD_URL} --secret ${TYK_DASHBOARD_SECRET}
+      run: |
+        docker run -v ${{ github.workspace }}:/app/data tykio/tyk-sync:v1.5.0 dump --output /app/data/$BACKUP_DIR --dashboard ${TYK_DASHBOARD_URL} --secret ${TYK_DASHBOARD_SECRET}
       env:
         TYK_DASHBOARD_URL: ${{ secrets.TYK_DASHBOARD_URL }}
         TYK_DASHBOARD_SECRET: ${{ secrets.TYK_DASHBOARD_SECRET }}
-        BACKUP_DIR: "backup/$(date +%Y-%m-%d)"
 
     - name: Commit and Push Backup
       run: |
