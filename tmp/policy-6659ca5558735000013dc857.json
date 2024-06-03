@@ -1,0 +1,42 @@
+{
+  "_id": "6659ca5558735000013dc857",
+  "id": "6659ca5558735000013dc857",
+  "name": "pol1",
+  "org_id": "664f5023d4df31000105fc8d",
+  "rate": 1000,
+  "per": 60,
+  "quota_max": -1,
+  "quota_renewal_rate": -1,
+  "throttle_interval": -1,
+  "throttle_retry_limit": -1,
+  "max_query_depth": -1,
+  "access_rights": {
+    "74cd1dd5ca1a431d7c22d4bdf5cdb420": {
+      "api_name": "test1",
+      "api_id": "74cd1dd5ca1a431d7c22d4bdf5cdb420",
+      "versions": [
+        "Default"
+      ],
+      "allowed_urls": [],
+      "restricted_types": [],
+      "limit": null,
+      "field_access_rights": [],
+      "allowance_scope": ""
+    }
+  },
+  "hmac_enabled": false,
+  "active": true,
+  "is_inactive": false,
+  "date_created": "2024-05-31T13:02:13.491Z",
+  "tags": [],
+  "key_expires_in": 0,
+  "partitions": {
+    "quota": true,
+    "rate_limit": true,
+    "complexity": false,
+    "acl": true,
+    "per_api": false
+  },
+  "last_updated": "1717160533",
+  "meta_data": {}
+}

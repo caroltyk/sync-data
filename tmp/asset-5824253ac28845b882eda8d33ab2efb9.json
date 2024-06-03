@@ -1,0 +1,62 @@
+{
+  "_id": "664fa045f581f700019417d8",
+  "id": "5824253ac28845b882eda8d33ab2efb9",
+  "name": "My Base API",
+  "org_id": "664f5023d4df31000105fc8d",
+  "description": "Detail logs and tracing enabled, Add segment tag \"staging\"",
+  "kind": "oas-template",
+  "data": {
+    "openapi": "3.0.3",
+    "info": {
+      "version": "1.0.0",
+      "title": "default"
+    },
+    "security": [
+      {
+        "authToken": []
+      }
+    ],
+    "paths": {},
+    "components": {
+      "securitySchemes": {
+        "authToken": {
+          "type": "apiKey",
+          "in": "header",
+          "name": "Authorization"
+        }
+      }
+    },
+    "x-tyk-api-gateway": {
+      "info": {
+        "state": {
+          "active": true,
+          "internal": false
+        }
+      },
+      "server": {
+        "authentication": {
+          "enabled": false,
+          "securitySchemes": {
+            "authToken": {
+              "enabled": true,
+              "enableClientCertificate": false
+            }
+          }
+        },
+        "detailedActivityLogs": {
+          "enabled": true
+        },
+        "detailedTracing": {
+          "enabled": true
+        },
+        "gatewayTags": {
+          "enabled": true,
+          "tags": [
+            "staging"
+          ]
+        }
+      }
+    }
+  },
+  "last_updated": "2024-05-29T14:03:48.558Z"
+}
