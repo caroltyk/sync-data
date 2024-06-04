@@ -19,7 +19,7 @@ jobs:
       run: |
         BACKUP_DIR="backup/$(date +%Y-%m-%d)"
         mkdir -p $BACKUP_DIR
-        export BACKUP_DIR
+        echo "BACKUP_DIR=$BACKUP_DIR" >> $GITHUB_ENV
 
     - name: Set Permissions for Backup Directory
       run: |
@@ -28,7 +28,7 @@ jobs:
     - name: Dump API Configurations
       run: |
         docker run ${TYK_SYNC_REPO}:${TYK_SYNC_VERSION} version
-        docker run -v ${{ github.workspace }}:/app/data ${TYK_SYNC_REPO}:${TYK_SYNC_VERSION} dump --target /app/data/$BACKUP_DIR --dashboard ${TYK_DASHBOARD_URL} --secret ${TYK_DASHBOARD_SECRET}
+        docker run -v ${{ github.workspace }}:/app/data ${TYK_SYNC_REPO}:${TYK_SYNC_VERSION} dump --target /app/data/${{ env.BACKUP_DIR }} --dashboard ${TYK_DASHBOARD_URL} --secret ${TYK_DASHBOARD_SECRET}
       env:
         TYK_SYNC_REPO: ${{ vars.TYK_SYNC_REPO }}
         TYK_SYNC_VERSION: ${{ vars.TYK_SYNC_VERSION }}
