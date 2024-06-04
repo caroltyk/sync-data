@@ -23,12 +23,12 @@ jobs:
 
     - name: Set Permissions for Backup Directory
       run: |
-        sudo chown -R $USER:$USER ${{ github.workspace }}/backup
+        sudo chown -R 1001:1001 ${{ github.workspace }}/backup
 
     - name: Dump API Configurations
       run: |
         docker run ${TYK_SYNC_REPO}:${TYK_SYNC_VERSION} version
-        docker run --user=$USER -v ${{ github.workspace }}:/app/data ${TYK_SYNC_REPO}:${TYK_SYNC_VERSION} dump --target /app/data/${{ env.BACKUP_DIR }} --dashboard ${TYK_DASHBOARD_URL} --secret ${TYK_DASHBOARD_SECRET}
+        docker run --user 1001:1001 -v ${{ github.workspace }}:/app/data ${TYK_SYNC_REPO}:${TYK_SYNC_VERSION} dump --target /app/data/${{ env.BACKUP_DIR }} --dashboard ${TYK_DASHBOARD_URL} --secret ${TYK_DASHBOARD_SECRET}
       env:
         TYK_SYNC_REPO: ${{ vars.TYK_SYNC_REPO }}
         TYK_SYNC_VERSION: ${{ vars.TYK_SYNC_VERSION }}
