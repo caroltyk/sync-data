@@ -19,7 +19,7 @@ jobs:
         echo '{' > .tyk.json
         echo '  "type": "apidef",' >> .tyk.json
         echo '  "files": [' >> .tyk.json
-        find . -type f -name '*.json' -path './apis/classic/*' -exec echo '    {"file": "{}"},' \; | sed '$ s/,$//' >> .tyk.json
+        find . -type f -name '*.json' -path './apis/*' -exec echo '    {"file": "{}"},' \; | sed '$ s/,$//' >> .tyk.json
         echo '  ],' >> .tyk.json
         echo '  "policies": [' >> .tyk.json
         find . -type f -name '*.json' -path './policies/*' -exec echo '    {"file": "{}"},' \; | sed '$ s/,$//' >> .tyk.json
@@ -28,6 +28,7 @@ jobs:
         find . -type f -name '*.json' -path './assets/*' -exec echo '    {"file": "{}"},' \; | sed '$ s/,$//' >> .tyk.json
         echo '  ]' >> .tyk.json
         echo '}' >> .tyk.json
+        cat .tyk.json
 
     - name: Sync with Tyk
       run: |
