@@ -21,6 +21,10 @@ jobs:
         mkdir -p $BACKUP_DIR
         export BACKUP_DIR
 
+    - name: Set Permissions for Backup Directory
+      run: |
+        sudo chown -R $USER:$USER ${{ github.workspace }}/backup
+
     - name: Dump API Configurations
       run: |
         docker run ${TYK_SYNC_REPO}:${TYK_SYNC_VERSION} version
