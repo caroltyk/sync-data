@@ -1,15 +1,12 @@
 name: Tyk Backup
 
 on:
-  workflow_dispatch: 
   schedule:
     - cron: '0 0 * * *'  # Runs every day at midnight
 
 jobs:
   backup:
     runs-on: ubuntu-latest
-    permissions: 
-        contents: write
 
     steps:
     - name: Checkout repository
@@ -19,28 +16,28 @@ jobs:
       run: |
         BACKUP_DIR="backup/$(date +%Y-%m-%d)"
         mkdir -p $BACKUP_DIR
-        echo "BACKUP_DIR=$BACKUP_DIR" >> $GITHUB_ENV
+        echo "BACKUP_DIR=$BACKUP_DIR" >> $GITHUB_ENV        
 
     - name: Set Permissions for Backup Directory
       run: |
-        sudo chown -R 1001:1001 ${{ github.workspace }}/backup
+                sudo chown -R 1001:1001 ${{ github.workspace }}/backup
 
     - name: Dump API Configurations
       run: |
-        docker run ${TYK_SYNC_REPO}:${TYK_SYNC_VERSION} version
-        docker run --user 1001:1001 -v ${{ github.workspace }}:/app/data ${TYK_SYNC_REPO}:${TYK_SYNC_VERSION} dump --target /app/data/${{ env.BACKUP_DIR }} --dashboard ${TYK_DASHBOARD_URL} --secret ${TYK_DASHBOARD_SECRET}
+                docker run --user 1001:1001 -v ${{ github.workspace }}:/app/data ${TYK_SYNC_REPO}:${TYK_SYNC_VERSION} dump --target /app/data/${{ env.BACKUP_DIR }} --dashboard ${TYK_DASHBOARD_URL} --secret ${TYK_DASHBOARD_SECRET}
       env:
         TYK_SYNC_REPO: ${{ vars.TYK_SYNC_REPO }}
         TYK_SYNC_VERSION: ${{ vars.TYK_SYNC_VERSION }}
         TYK_DASHBOARD_URL: ${{ secrets.TYK_DASHBOARD_URL }}
         TYK_DASHBOARD_SECRET: ${{ secrets.TYK_DASHBOARD_SECRET }}
 
-    - name: Commit and Push Backup
-      run: |
-        git config --global user.name 'github-actions'
-        git config --global user.email 'github-actions@github.com'
-        git add backup/
-        git commit -m "Backup on $(date +%Y-%m-%d)"
-        git push
+    - name: Upload to S3
+      uses: jakejarvis/s3-sync-action@v0.5.1
+      with:
+        args: --acl private --follow-symlinks --delete
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: 'us-east-1'  # Change to your region
+        SOURCE_DIR: ${{ env.BACKUP_DIR }}

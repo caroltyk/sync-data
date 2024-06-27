@@ -1,0 +1,21 @@
+{
+  "_id": "667d50f958305e0001e42534",
+  "id": "c8cdba8eae5f493b95e60c60c955ac39",
+  "name": "asgasdg",
+  "org_id": "667d24e2f929bb000130de17",
+  "description": "asdgsg",
+  "kind": "oas-template",
+  "data": {
+    "openapi": "3.0.3",
+    "info": {
+      "version": "1.0.0",
+      "title": "default"
+    },
+    "security": [],
+    "paths": {},
+    "components": {
+      "securitySchemes": {}
+    }
+  },
+  "last_updated": "2024-06-27T11:46:01.517237Z"
+}

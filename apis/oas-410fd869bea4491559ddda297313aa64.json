@@ -1,0 +1,51 @@
+{
+  "oas": {
+    "components": {},
+    "info": {
+      "title": "a",
+      "version": "1.0.0"
+    },
+    "openapi": "3.0.3",
+    "paths": {},
+    "servers": [
+      {
+        "url": "http://tyk-gw.local/a/"
+      }
+    ],
+    "x-tyk-api-gateway": {
+      "info": {
+        "dbId": "667d50b458305e0001e42530",
+        "id": "410fd869bea4491559ddda297313aa64",
+        "name": "a",
+        "orgId": "667d24e2f929bb000130de17",
+        "state": {
+          "active": true
+        }
+      },
+      "middleware": {
+        "global": {
+          "contextVariables": {
+            "enabled": true
+          },
+          "trafficLogs": {
+            "enabled": true
+          }
+        }
+      },
+      "server": {
+        "listenPath": {
+          "strip": true,
+          "value": "/a/"
+        }
+      },
+      "upstream": {
+        "url": "http://httpbin.org/"
+      }
+    }
+  },
+  "hook_references": [],
+  "is_site": false,
+  "sort_by": 0,
+  "user_group_owners": [],
+  "user_owners": []
+}
