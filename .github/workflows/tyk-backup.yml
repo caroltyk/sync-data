@@ -1,6 +1,7 @@
 name: Tyk Backup
 
 on:
+  workflow_dispatch: 
   schedule:
     - cron: '0 0 * * *'  # Runs every day at midnight
 
